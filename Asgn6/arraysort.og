@@ -1,0 +1,114 @@
+.globl swap
+.globl selectionSort
+
+#void selectionSort(int arr[], int i, int n){
+selectionSort:
+# callee setup goes here
+
+    # find the minimum element in the unsorted subarray `[i…n-1]` and swap it with `arr[i]`  */
+#    int j;
+	li t0, 0
+
+
+#    int min = i;
+	mv t1, a1
+
+#    for (j = i + 1; j < n; j++)    {
+
+for:
+#j = i + 1;
+	addi t2, t1, 1 #i + 1
+	add t0, t0, t2
+forloop:
+# j < n
+	bge t0, a2 endfor
+	mv t5, a0	#arr for j
+	mv t6, a0	#arr for min
+	add t5, t5, t0 #going to index location j in arr
+	add t6, t6, t1 #going to index location min in arr 
+
+
+
+#        /* if `arr[j]` is less, then it is the new minimum */
+#        if (arr[j] < arr[min]) {
+if1:
+	lw t3, (t5)
+	lw t4, (t6)
+	bge t3, t4 endif1
+	mv t1, t0
+	addi t0, t0, 1
+	b forloop
+
+#            min = j;    /* update the index of minimum element */
+
+
+#        }
+endif1:
+	addi t0, t0, 1
+	b for
+
+
+#    }
+endfor:
+
+#    /* swap the minimum element in subarray `arr[i…n-1]` with `arr[i] */
+#    swap(arr, min, i); a0 = arr, a2 = i
+	la a1, t1 
+#caller setup and subroutine call for swap goes here.
+	jal swap 
+
+#caller teardown for swap goes here (if needed).
+
+#    if (i + 1 < n) {
+if2:
+	addi t2, a1, 1
+	bge t2, a2 endif2
+	mv a1, t2
+
+
+#        selectionSort(arr, i + 1, n);
+#caller setup and subroutine call for selectionSort goes here.
+	jal selectionSort
+
+#caller teardown for selectionSort goes here (if needed).
+
+
+
+#    }
+endif2:
+
+
+# callee teardown goes here
+	lw ra, 12 (sp)
+	addi sp, sp, 16
+	ret
+
+
+#}
+
+
+
+#/* Utility function to swap values at two indices in an array*/
+#void swap(int arr[], int i, int j) {
+swap:
+    lw t0, (a0)
+    lw t1,(a1)
+    sw t1, (a0)
+    sw t0, (a1)
+    ret
+# swap callee setup goes here
+
+#    int temp = arr[i];
+
+
+#    arr[i] = arr[j];
+
+
+#    arr[j] = temp;
+
+
+# swap callee teardown goes here
+
+
+
+#}

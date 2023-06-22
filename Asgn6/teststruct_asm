@@ -1,0 +1,269 @@
+	.file	"structsort.c"
+	.text
+	.globl	studentlist
+	.data
+	.align 32
+studentlist:
+	.ascii "Dougy\0"
+	.space 2
+	.long	13
+	.long	2122
+	.ascii "Timmy\0"
+	.space 2
+	.long	15
+	.long	2122
+	.ascii "Emily\0"
+	.space 2
+	.long	18
+	.long	2123
+	.ascii "Jimmy\0"
+	.space 2
+	.long	14
+	.long	2120
+	.ascii "Kimmy\0"
+	.space 2
+	.long	11
+	.long	2123
+	.ascii "Carlo\0"
+	.space 2
+	.long	19
+	.long	2123
+	.ascii "Vicky\0"
+	.space 2
+	.long	22
+	.long	2120
+	.ascii "Anton\0"
+	.space 2
+	.long	12
+	.long	2322
+	.ascii "Brady\0"
+	.space 2
+	.long	10
+	.long	2120
+	.ascii "Sonya\0"
+	.space 2
+	.long	16
+	.long	2123
+	.def	__main;	.scl	2;	.type	32;	.endef
+	.text
+	.globl	main
+	.def	main;	.scl	2;	.type	32;	.endef
+	.seh_proc	main
+main:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	call	__main
+	movl	$10, -4(%rbp)
+	movl	-4(%rbp), %eax
+	movl	%eax, %r8d
+	movl	$0, %edx
+	leaq	studentlist(%rip), %rax
+	movq	%rax, %rcx
+	call	selectionSort
+	movl	-4(%rbp), %eax
+	movl	%eax, %edx
+	leaq	studentlist(%rip), %rax
+	movq	%rax, %rcx
+	call	printArray
+	movl	$0, %eax
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	swap
+	.def	swap;	.scl	2;	.type	32;	.endef
+	.seh_proc	swap
+swap:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$16, %rsp
+	.seh_stackalloc	16
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movl	%edx, 24(%rbp)
+	movl	%r8d, 32(%rbp)
+	movl	24(%rbp), %eax
+	cltq
+	salq	$4, %rax
+	movq	%rax, %rdx
+	movq	16(%rbp), %rax
+	addq	%rdx, %rax
+	movq	8(%rax), %rdx
+	movq	(%rax), %rax
+	movq	%rax, -16(%rbp)
+	movq	%rdx, -8(%rbp)
+	movl	32(%rbp), %eax
+	cltq
+	salq	$4, %rax
+	movq	%rax, %rdx
+	movq	16(%rbp), %rax
+	addq	%rdx, %rax
+	movl	24(%rbp), %edx
+	movslq	%edx, %rdx
+	movq	%rdx, %rcx
+	salq	$4, %rcx
+	movq	16(%rbp), %rdx
+	addq	%rdx, %rcx
+	movq	8(%rax), %rdx
+	movq	(%rax), %rax
+	movq	%rax, (%rcx)
+	movq	%rdx, 8(%rcx)
+	movl	32(%rbp), %eax
+	cltq
+	salq	$4, %rax
+	movq	%rax, %rdx
+	movq	16(%rbp), %rax
+	leaq	(%rdx,%rax), %rcx
+	movq	-16(%rbp), %rax
+	movq	-8(%rbp), %rdx
+	movq	%rax, (%rcx)
+	movq	%rdx, 8(%rcx)
+	nop
+	addq	$16, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.globl	selectionSort
+	.def	selectionSort;	.scl	2;	.type	32;	.endef
+	.seh_proc	selectionSort
+selectionSort:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movl	%edx, 24(%rbp)
+	movl	%r8d, 32(%rbp)
+	movl	24(%rbp), %eax
+	movl	%eax, -8(%rbp)
+	movl	24(%rbp), %eax
+	addl	$1, %eax
+	movl	%eax, -4(%rbp)
+	jmp	.L5
+.L7:
+	movl	-4(%rbp), %eax
+	cltq
+	salq	$4, %rax
+	movq	%rax, %rdx
+	movq	16(%rbp), %rax
+	addq	%rdx, %rax
+	movl	8(%rax), %edx
+	movl	-8(%rbp), %eax
+	cltq
+	salq	$4, %rax
+	movq	%rax, %rcx
+	movq	16(%rbp), %rax
+	addq	%rcx, %rax
+	movl	8(%rax), %eax
+	cmpl	%eax, %edx
+	jge	.L6
+	movl	-4(%rbp), %eax
+	movl	%eax, -8(%rbp)
+.L6:
+	addl	$1, -4(%rbp)
+.L5:
+	movl	-4(%rbp), %eax
+	cmpl	32(%rbp), %eax
+	jl	.L7
+	movl	24(%rbp), %ecx
+	movl	-8(%rbp), %edx
+	movq	16(%rbp), %rax
+	movl	%ecx, %r8d
+	movq	%rax, %rcx
+	call	swap
+	movl	24(%rbp), %eax
+	addl	$1, %eax
+	cmpl	%eax, 32(%rbp)
+	jle	.L9
+	movl	24(%rbp), %eax
+	leal	1(%rax), %edx
+	movl	32(%rbp), %ecx
+	movq	16(%rbp), %rax
+	movl	%ecx, %r8d
+	movq	%rax, %rcx
+	call	selectionSort
+.L9:
+	nop
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.section .rdata,"dr"
+.LC0:
+	.ascii "%d \0"
+.LC1:
+	.ascii "%s \0"
+.LC2:
+	.ascii "%d\12\0"
+	.text
+	.globl	printArray
+	.def	printArray;	.scl	2;	.type	32;	.endef
+	.seh_proc	printArray
+printArray:
+	pushq	%rbp
+	.seh_pushreg	%rbp
+	movq	%rsp, %rbp
+	.seh_setframe	%rbp, 0
+	subq	$48, %rsp
+	.seh_stackalloc	48
+	.seh_endprologue
+	movq	%rcx, 16(%rbp)
+	movl	%edx, 24(%rbp)
+	movl	$0, -4(%rbp)
+	jmp	.L11
+.L12:
+	movl	-4(%rbp), %eax
+	cltq
+	salq	$4, %rax
+	movq	%rax, %rdx
+	movq	16(%rbp), %rax
+	addq	%rdx, %rax
+	movl	8(%rax), %eax
+	movl	%eax, %edx
+	leaq	.LC0(%rip), %rax
+	movq	%rax, %rcx
+	call	printf
+	movl	-4(%rbp), %eax
+	cltq
+	salq	$4, %rax
+	movq	%rax, %rdx
+	movq	16(%rbp), %rax
+	addq	%rdx, %rax
+	movq	%rax, %rdx
+	leaq	.LC1(%rip), %rax
+	movq	%rax, %rcx
+	call	printf
+	movl	-4(%rbp), %eax
+	cltq
+	salq	$4, %rax
+	movq	%rax, %rdx
+	movq	16(%rbp), %rax
+	addq	%rdx, %rax
+	movl	12(%rax), %eax
+	movl	%eax, %edx
+	leaq	.LC2(%rip), %rax
+	movq	%rax, %rcx
+	call	printf
+	addl	$1, -4(%rbp)
+.L11:
+	movl	-4(%rbp), %eax
+	cmpl	24(%rbp), %eax
+	jl	.L12
+	nop
+	nop
+	addq	$48, %rsp
+	popq	%rbp
+	ret
+	.seh_endproc
+	.ident	"GCC: (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders) 12.2.0"
+	.def	printf;	.scl	2;	.type	32;	.endef
