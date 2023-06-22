@@ -1,0 +1,13 @@
+s0 = first number
+s1 = second number
+s4 = operation number
+s3 = result
+s5 = user input (y/n)!!!!!!!!
+Questions = L.26, L.35, L.14, L.66, L.133
+s6 = number of operations
+
+misc:
+s2 = 'n'
+t0 = operating number (1,2,3,4,etc.)
+
+Simplest operations to s registers
