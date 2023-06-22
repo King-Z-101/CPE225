@@ -1,0 +1,12 @@
+go through chars from 0 - 255 (loop)
+go through string and compare char within string
+if they match print 
+
+
+t0 = i (i = 48)
+t1 = j (j = 0)
+t2 = 123 (end of for loop)
+t3 = 20 (end of nested loop)
+s1 = str (store str address); 0x1001003a
+s2 = store letter at index t1 to s2
+t4 = '\n'
